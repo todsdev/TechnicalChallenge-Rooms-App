@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:icon="@drawable/ic_list_24"
+        android:title="@string/rooms"
+        android:id="@+id/menu_booking"
+        />
+    <item
+        android:icon="@drawable/ic_booking_24"
+        android:title="@string/reservations"
+        android:id="@+id/menu_reservation"/>
+</menu>

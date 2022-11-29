@@ -1,3 +1,19 @@
 <resources>
     <string name="app_name">Rooms</string>
+    <string name="e_mail">E-mail:</string>
+    <string name="name">Name:</string>
+    <string name="password">Password:</string>
+    <string name="confirm_password">Confirm password:</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="choose">Choose</string>
+    <string name="price_per_bed">Price per bed:</string>
+    <string name="twelve_beds_dorm">Twelve beds dorm</string>
+    <string name="six_beds_dorm">Six beds dorm</string>
+    <string name="eight_beds_dorm">Eight beds dorm</string>
+    <string name="_14_50">$14.50</string>
+    <string name="_17_56">$17.56</string>
+    <string name="_12_01">$12.01</string>
+    <string name="rooms">Rooms</string>
+    <string name="reservations">Reservations</string>
 </resources>

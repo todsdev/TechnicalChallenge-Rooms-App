@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Rooms</string>
-    <string name="e_mail">E-mail:</string>
+    <string name="e_mail">Email:</string>
     <string name="name">Name:</string>
     <string name="password">Password:</string>
     <string name="confirm_password">Confirm password:</string>
@@ -16,4 +16,17 @@
     <string name="_12_01">$12.01</string>
     <string name="rooms">Rooms</string>
     <string name="reservations">Reservations</string>
+    <string name="failed_password_match">Passwords do not match</string>
+    <string name="empty_name">Field "Name" cannot be empty</string>
+    <string name="empty_email">Field "Email" cannot be empty</string>
+    <string name="empty_password">Field "Password" cannot be empty</string>
+    <string name="empty_password_confirm">Field "Confirm password" cannot be empty</string>
+    <string name="strong_password">Please choose a stronger password</string>
+    <string name="valid_email">Please use a valid email</string>
+    <string name="chosen_email">Chosen email is already in use</string>
+    <string name="failed_registration">An error occurred registering, please try again</string>
+    <string name="logout">Logout</string>
+    <string name="registered_successfully">Registered successfully</string>
+    <string name="logged_out_successfully">Logged out successfully</string>
+
 </resources>

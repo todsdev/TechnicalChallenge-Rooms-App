@@ -9,7 +9,14 @@
         android:id="@+id/dormsFragment"
         android:name="com.tods.rooms.ui.dorms.DormsFragment"
         android:label="DormsFragment"
-        tools:layout="@layout/fragment_dorms"/>
+        tools:layout="@layout/fragment_dorms">
+        <action
+            android:id="@+id/action_dormsFragment_to_registerFragment"
+            app:destination="@id/registerFragment" />
+        <action
+            android:id="@+id/action_dormsFragment_to_loginFragment"
+            app:destination="@id/loginFragment" />
+    </fragment>
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.tods.rooms.ui.login.LoginFragment"
@@ -19,5 +26,9 @@
         android:id="@+id/registerFragment"
         android:name="com.tods.rooms.ui.register.RegisterFragment"
         android:label="RegisterFragment"
-        tools:layout="@layout/fragment_register"/>
+        tools:layout="@layout/fragment_register">
+        <action
+            android:id="@+id/action_registerFragment_to_dormsFragment"
+            app:destination="@id/dormsFragment" />
+    </fragment>
 </navigation>

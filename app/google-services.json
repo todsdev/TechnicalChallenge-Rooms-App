@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "591096539075",
+    "firebase_url": "https://rooms-5df80-default-rtdb.firebaseio.com",
+    "project_id": "rooms-5df80",
+    "storage_bucket": "rooms-5df80.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:591096539075:android:c1043ca7a8ea184c157f76",
+        "android_client_info": {
+          "package_name": "com.tods.rooms"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "591096539075-tdgqa8o37jonp1v2l0f733h9gi1l7fp9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.tods.rooms",
+            "certificate_hash": "334fb3302929e9db5d4757f7e030711d5d95020f"
+          }
+        },
+        {
+          "client_id": "591096539075-6hkvk55pq1lvhuhk1lcc84ip5nidf1rd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCVgXMViBVae4N9qomxE7LS0uufIzqKhCo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "591096539075-6hkvk55pq1lvhuhk1lcc84ip5nidf1rd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

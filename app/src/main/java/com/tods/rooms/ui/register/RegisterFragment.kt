@@ -23,7 +23,7 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class RegisterFragment: BaseFragment<FragmentRegisterBinding, RegisterViewModel>() {
     override val viewModel: RegisterViewModel by viewModels()
-    private lateinit var auth: FirebaseAuth
+    private var auth: FirebaseAuth = Firebase.auth
 
     override fun recoverViewBinding(inflater: LayoutInflater, container: ViewGroup?):
             FragmentRegisterBinding = FragmentRegisterBinding.inflate(inflater, container, false)
@@ -35,7 +35,6 @@ class RegisterFragment: BaseFragment<FragmentRegisterBinding, RegisterViewModel>
     }
 
     private fun configInitialSettings() {
-        auth = Firebase.auth
         (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.register)
     }
 
@@ -55,7 +54,9 @@ class RegisterFragment: BaseFragment<FragmentRegisterBinding, RegisterViewModel>
                 if(password.isNotEmpty()) {
                     if(passwordConfirm.isNotEmpty()) {
                         if(password == passwordConfirm) {
-                            val user = User(name, email)
+                            val user = User()
+                            user.name = name
+                            user.email = email
                             user.password = password
                             configRegistration(user)
                         } else {
@@ -85,7 +86,7 @@ class RegisterFragment: BaseFragment<FragmentRegisterBinding, RegisterViewModel>
                 findNavController().navigate(action)
             } else {
                 try {
-                    task.exception
+                    throw task.exception!!
                 } catch(e: FirebaseAuthWeakPasswordException) {
                     toast(getString(R.string.strong_password))
                 } catch(e: FirebaseAuthInvalidCredentialsException) {

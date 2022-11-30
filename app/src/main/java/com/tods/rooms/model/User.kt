@@ -9,26 +9,22 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 
 data class User(
-    var name: String,
-    var email: String,
-    @Exclude
-    var password: String = "",
-    var id: String = ""
+    var name: String = "",
+    var email: String = "",
+    @get:Exclude
+    var password: String = ""
 ) {
     private lateinit var database: DatabaseReference
     private lateinit var auth: FirebaseAuth
 
-    fun recoverCurrentUser(): FirebaseUser? {
+    private fun recoverCurrentUser(): FirebaseUser? {
         auth = Firebase.auth
         return auth.currentUser
     }
 
     fun save() {
-        val user = User(name, email, id)
-        val generatedId = recoverCurrentUser()!!.uid
-        user.id = generatedId
         database = FirebaseDatabase.getInstance().getReference("Users")
-        database.child(generatedId).setValue(this)
+        database.child(recoverCurrentUser()!!.uid).setValue(this)
     }
 }
 

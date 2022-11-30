@@ -28,5 +28,9 @@
     <string name="logout">Logout</string>
     <string name="registered_successfully">Registered successfully</string>
     <string name="logged_out_successfully">Logged out successfully</string>
+    <string name="logged_in_successfully">Logged in successfully</string>
+    <string name="user_exception">Account not registered</string>
+    <string name="account_exception">Email and password do not match</string>
+    <string name="failed_login">An error occurred during login, please try again</string>
 
 </resources>

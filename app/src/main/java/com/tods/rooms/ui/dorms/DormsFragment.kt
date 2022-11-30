@@ -39,7 +39,6 @@ class DormsFragment: BaseFragment<FragmentDormsBinding, DormsViewModel>() {
         configRoomPicker()
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
@@ -94,11 +93,11 @@ class DormsFragment: BaseFragment<FragmentDormsBinding, DormsViewModel>() {
 
     private fun configHiddenCards() {
         hiddenView6 = binding.constraint6
-        hiddenView6.visibility = View.GONE
+        hiddenView6.hide()
         hiddenView8 = binding.constraint8
-        hiddenView8.visibility = View.GONE
+        hiddenView8.hide()
         hiddenView12 = binding.constraint12
-        hiddenView12.visibility = View.GONE
+        hiddenView12.hide()
         configCardView()
     }
 

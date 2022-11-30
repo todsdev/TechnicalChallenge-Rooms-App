@@ -2,12 +2,14 @@ package com.tods.rooms.ui.dorms
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -33,12 +35,61 @@ class DormsFragment: BaseFragment<FragmentDormsBinding, DormsViewModel>() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configHiddenCards()
-        (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.app_name)
+        configInitialSettings()
+        configRoomPicker()
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+    }
+
+    private fun configRoomPicker() = with(binding) {
+            choose6.setOnClickListener {
+                if(auth.currentUser != null) {
+                    val value = 17.56f
+                    val action = DormsFragmentDirections.actionDormsFragmentToRoomFragment(value)
+                    findNavController().navigate(action)
+                } else {
+                    configDialog()
+                }
+            }
+            choose8.setOnClickListener {
+                if(auth.currentUser != null) {
+                    val value = 14.50f
+                    val action = DormsFragmentDirections.actionDormsFragmentToRoomFragment(value)
+                    findNavController().navigate(action)
+                } else {
+                    configDialog()
+                }
+            }
+            choose12.setOnClickListener {
+                if(auth.currentUser != null) {
+                    val value = 12.01f
+                    val action = DormsFragmentDirections.actionDormsFragmentToRoomFragment(value)
+                    findNavController().navigate(action)
+                } else {
+                    configDialog()
+                }
+            }
+    }
+
+    private fun configDialog() = MaterialAlertDialogBuilder(requireContext())
+        .setTitle(getString(R.string.dear_user))
+        .setMessage(getString(R.string.dear_user_message))
+        .setPositiveButton(getString(R.string.register)) { _, _ ->
+            val action = DormsFragmentDirections.actionDormsFragmentToRegisterFragment()
+            findNavController().navigate(action)
+        }.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+            dialog.dismiss()
+        }.setNeutralButton(getString(R.string.login)) { _, _ ->
+            val action = DormsFragmentDirections.actionDormsFragmentToLoginFragment()
+            findNavController().navigate(action)
+        }.show()
+
+    private fun configInitialSettings() {
+        (activity as AppCompatActivity).supportActionBar!!.title = getString(R.string.app_name)
     }
 
     private fun configHiddenCards() {

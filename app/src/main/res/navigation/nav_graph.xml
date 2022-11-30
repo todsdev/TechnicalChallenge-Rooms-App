@@ -16,6 +16,9 @@
         <action
             android:id="@+id/action_dormsFragment_to_loginFragment"
             app:destination="@id/loginFragment" />
+        <action
+            android:id="@+id/action_dormsFragment_to_roomFragment"
+            app:destination="@id/roomFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -35,4 +38,18 @@
             android:id="@+id/action_registerFragment_to_dormsFragment"
             app:destination="@id/dormsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/roomFragment"
+        android:name="com.tods.rooms.ui.room.RoomFragment"
+        android:label="RoomFragment"
+        tools:layout="@layout/fragment_room">
+        <argument
+            android:name="value"
+            app:argType="float" />
+    </fragment>
+    <fragment
+        android:id="@+id/myReservationsFragment"
+        android:name="com.tods.rooms.ui.my_reservations.MyReservationsFragment"
+        android:label="MyReservationsFragment"
+        tools:layout="@layout/fragment_my_reservations"/>
 </navigation>

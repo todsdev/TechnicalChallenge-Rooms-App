@@ -6,7 +6,18 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-
+    <ProgressBar
+        android:id="@+id/progressCircular"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:indeterminateTint="@color/red"
+        android:elevation="5dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -130,6 +141,7 @@
                             android:layout_height="wrap_content"
                             android:layout_marginStart="12dp"
                             android:layout_marginTop="12dp"
+                            android:layout_marginBottom="5dp"
                             android:src="@drawable/ic_calendar_36"
                             app:layout_constraintStart_toStartOf="parent"
                             app:layout_constraintTop_toTopOf="parent" />
@@ -421,8 +433,8 @@
                             android:text="@string/_00"
                             android:textSize="18sp"
                             android:textStyle="bold"
-                            app:layout_constraintStart_toEndOf="@id/price_per_bed"
-                            app:layout_constraintTop_toBottomOf="@id/price_per_bed"/>
+                            app:layout_constraintStart_toEndOf="@id/total_rooms"
+                            app:layout_constraintTop_toBottomOf="@id/tv_room_value"/>
 
                         <TextView
                             android:id="@+id/total_days"
@@ -441,7 +453,7 @@
                             android:id="@+id/tv_days"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="34dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:gravity="center_horizontal"
                             android:textColor="@color/green"
@@ -468,7 +480,7 @@
                             android:id="@+id/tv_payment"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="44dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:gravity="center_horizontal"
                             android:textColor="@color/green"
@@ -553,7 +565,7 @@
                             android:id="@+id/tv_currency"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="42dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="10dp"
                             android:gravity="center_horizontal"
                             android:textColor="@color/green"
@@ -581,7 +593,7 @@
                             android:id="@+id/tv_total_value"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="20dp"
+                            android:layout_marginStart="10dp"
                             android:layout_marginTop="16dp"
                             android:gravity="center_horizontal"
                             android:textColor="@color/green"

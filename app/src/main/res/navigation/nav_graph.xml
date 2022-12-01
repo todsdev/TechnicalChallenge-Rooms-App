@@ -46,6 +46,9 @@
         <argument
             android:name="value"
             app:argType="float" />
+        <action
+            android:id="@+id/action_roomFragment_to_myReservationsFragment"
+            app:destination="@id/myReservationsFragment" />
     </fragment>
     <fragment
         android:id="@+id/myReservationsFragment"

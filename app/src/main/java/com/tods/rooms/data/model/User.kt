@@ -1,4 +1,4 @@
-package com.tods.rooms.model
+package com.tods.rooms.data.model
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser

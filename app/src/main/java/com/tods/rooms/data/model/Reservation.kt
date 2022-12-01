@@ -1,8 +1,10 @@
-package com.tods.rooms.model
+package com.tods.rooms.data.model
 
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 
 data class Reservation(
     var baseValue: Float = 0f,
@@ -15,10 +17,10 @@ data class Reservation(
     var totalValue: Float = 0f
 ) {
     private lateinit var database: DatabaseReference
-    private lateinit var auth: FirebaseAuth
+    private var auth: FirebaseAuth = Firebase.auth
 
     fun save() {
         database = FirebaseDatabase.getInstance().getReference("Reservations")
-        database.child(auth.currentUser!!.uid).setValue(this)
+        database.child(auth.currentUser!!.uid).child("$currency$numDays$numBeds$currency").setValue(this)
     }
 }

@@ -4,9 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.google.firebase.auth.FirebaseAuth
@@ -17,7 +15,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tods.rooms.R
 import com.tods.rooms.databinding.FragmentRegisterBinding
-import com.tods.rooms.model.User
+import com.tods.rooms.data.model.User
 import com.tods.rooms.ui.base.BaseFragment
 import com.tods.rooms.util.toast
 import dagger.hilt.android.AndroidEntryPoint

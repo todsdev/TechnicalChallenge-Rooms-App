@@ -10,6 +10,8 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
@@ -17,12 +19,17 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.tods.rooms.R
+import com.tods.rooms.data.model.Reservation
 import com.tods.rooms.databinding.FragmentRoomBinding
+import com.tods.rooms.state.ResourceState
 import com.tods.rooms.ui.base.BaseFragment
 import com.tods.rooms.util.hide
+import com.tods.rooms.util.limitedDescription
 import com.tods.rooms.util.show
 import com.tods.rooms.util.toast
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import java.text.DecimalFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.time.Duration.Companion.milliseconds
@@ -51,19 +58,69 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
         configPaymentsValues()
     }
 
+    private fun configCollectObserver() = lifecycleScope.launch {
+        viewModel.search.collect { result ->
+            when(result) {
+                is ResourceState.Success -> {
+                    binding.progressCircular.hide()
+                    result.data?.let { values ->
+                        val decimal = DecimalFormat()
+                        decimal.maximumFractionDigits = 2
+                        val convertedTotalValue = values.result
+                        val convertedValueToDecimal = decimal.format(convertedTotalValue)
+                        binding.tvTotalValue.text =
+                            "${convertedValueToDecimal.toString()} ${values.query.to.uppercase(
+                                Locale.getDefault())}"
+                    }
+                }
+                is ResourceState.Loading -> {
+                    binding.progressCircular.show()
+                }
+                is ResourceState.Error -> {
+                    binding.progressCircular.hide()
+                    toast(getString(R.string.failed))
+                }
+                else -> { }
+            }
+        }
+    }
+
     private fun configTotalValues() = with(binding) {
         val dateOne = checkInDay!!.date.time.milliseconds
         val dateTwo = checkOutDay!!.date.time.milliseconds
         val millisecondsBetween: Long = dateTwo.inWholeMilliseconds - dateOne.inWholeMilliseconds
         val daysBetween = TimeUnit.MILLISECONDS.toDays(millisecondsBetween).toString()
         val totalValue = (bedValue * daysBetween.toInt() * bedNumbers)
+        viewModel.fetch(chosenCurrency, totalValue)
+        configCollectObserver()
         tvDays.text = daysBetween
         tvCurrency.text = chosenCurrency
-        tvTotalValue.text = totalValue.toString()
         tvNumberRooms.text = bedNumbers.toString()
         tvPayment.text = paymentMethod
         tvCheckIn.text = "${checkInDay!!.year.toString()}/${(((checkInDay!!.month).toInt()) + 1).toString()}/${checkInDay!!.day.toString()}"
         tvCheckOut.text = "${checkOutDay!!.year.toString()}/${(((checkOutDay!!.month).toInt()) + 1).toString()}/${checkOutDay!!.day.toString()}"
+        buttonAccept.setOnClickListener {
+            MaterialAlertDialogBuilder(requireContext())
+                .setTitle(getString(R.string.confirm))
+                .setMessage(getString(R.string.sure_confirm))
+                .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }.setPositiveButton(getString(R.string.accept)) { _, _ ->
+                    val reservation = Reservation()
+                    reservation.paymentMethod = paymentMethod
+                    reservation.totalValue = totalValue
+                    reservation.checkIn = "${checkInDay!!.year.toString()}/${(((checkInDay!!.month).toInt()) + 1).toString()}/${checkInDay!!.day.toString()}"
+                    reservation.checkOut = "${checkOutDay!!.year.toString()}/${(((checkOutDay!!.month).toInt()) + 1).toString()}/${checkOutDay!!.day.toString()}"
+                    reservation.numDays = daysBetween.toInt()
+                    reservation.baseValue = bedValue
+                    reservation.currency = chosenCurrency
+                    reservation.numBeds = bedNumbers
+                    reservation.save()
+                    toast(getString(R.string.registered_successfully_reservation))
+                    val action = RoomFragmentDirections.actionRoomFragmentToMyReservationsFragment()
+                    findNavController().navigate(action)
+                }.show()
+        }
     }
 
     private fun configPaymentsValues() = with(binding) {
@@ -72,6 +129,16 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
         configChosenCurrency()
         buttonNextPayment.setOnClickListener {
             if(chosenCurrency != getString(R.string.dash_dash) && bedNumbers != 0 && paymentMethod != getString(R.string.dash_dash)) {
+                arrowDownTotal.setOnClickListener {
+                    if(hiddenViewTotal.visibility == View.VISIBLE) {
+                        hiddenViewTotal.hide()
+                        arrowDownTotal.setImageResource(R.drawable.ic_arrow_down_24)
+                    } else {
+                        TransitionManager.beginDelayedTransition(cardViewRoom, AutoTransition())
+                        hiddenViewTotal.show()
+                        arrowDownTotal.setImageResource(R.drawable.ic_arrow_up_24)
+                    }
+                }
                 toast(getString(R.string.payment_saved))
                 hiddenViewPayment.hide()
                 hiddenViewTotal.show()
@@ -208,6 +275,16 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
                             calendarViewIn.clearSelection()
                             calendarViewOut.clearSelection()
                             buttonNext.setOnClickListener(null)
+                            arrowDownPayment.setOnClickListener {
+                                if(hiddenViewPayment.visibility == View.VISIBLE) {
+                                    hiddenViewPayment.hide()
+                                    arrowDownPayment.setImageResource(R.drawable.ic_arrow_down_24)
+                                } else {
+                                    TransitionManager.beginDelayedTransition(cardViewPayment, AutoTransition())
+                                    hiddenViewPayment.show()
+                                    arrowDownPayment.setImageResource(R.drawable.ic_arrow_up_24)
+                                }
+                            }
                         }
                     } else {
                         toast(getString(R.string.invalid_date))
@@ -281,26 +358,6 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
                 hiddenViewDate.show()
                 arrowDownDate.setImageResource(R.drawable.ic_arrow_up_24)
             }
-        }
-        arrowDownPayment.setOnClickListener {
-            if(hiddenViewPayment.visibility == View.VISIBLE) {
-                hiddenViewPayment.hide()
-                arrowDownPayment.setImageResource(R.drawable.ic_arrow_down_24)
-            } else {
-                TransitionManager.beginDelayedTransition(cardViewPayment, AutoTransition())
-                hiddenViewPayment.show()
-                arrowDownPayment.setImageResource(R.drawable.ic_arrow_up_24)
-            }
-        }
-        arrowDownTotal.setOnClickListener {
-                if(hiddenViewTotal.visibility == View.VISIBLE) {
-                    hiddenViewTotal.hide()
-                    arrowDownTotal.setImageResource(R.drawable.ic_arrow_down_24)
-                } else {
-                    TransitionManager.beginDelayedTransition(cardViewRoom, AutoTransition())
-                    hiddenViewTotal.show()
-                    arrowDownTotal.setImageResource(R.drawable.ic_arrow_up_24)
-                }
         }
     }
 

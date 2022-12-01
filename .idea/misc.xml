@@ -7,14 +7,16 @@
         <entry key="app/src/main/res/drawable/ic_arrow_down_24.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/ic_calendar_36.xml" value="0.129" />
         <entry key="app/src/main/res/drawable/ic_room_24.xml" value="0.129" />
+        <entry key="app/src/main/res/drawable/ic_room_36.xml" value="0.129" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.28072916666666664" />
         <entry key="app/src/main/res/layout/custom_calendar.xml" value="0.29375" />
+        <entry key="app/src/main/res/layout/custom_spinner.xml" value="0.29375" />
         <entry key="app/src/main/res/layout/dorms.xml" value="0.2917948717948718" />
         <entry key="app/src/main/res/layout/fragment_dorms.xml" value="0.2928205128205128" />
         <entry key="app/src/main/res/layout/fragment_login.xml" value="0.3041025641025641" />
         <entry key="app/src/main/res/layout/fragment_my_reservations.xml" value="0.29375" />
         <entry key="app/src/main/res/layout/fragment_register.xml" value="0.2928205128205128" />
-        <entry key="app/src/main/res/layout/fragment_room.xml" value="0.2917948717948718" />
+        <entry key="app/src/main/res/layout/fragment_room.xml" value="0.30512820512820515" />
         <entry key="app/src/main/res/menu/menu_bottom.xml" value="0.2947916666666667" />
         <entry key="app/src/main/res/menu/menu_dorms.xml" value="0.28229166666666666" />
       </map>

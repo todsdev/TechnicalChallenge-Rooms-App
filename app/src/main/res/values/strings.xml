@@ -36,20 +36,22 @@
     <string name="dear_user_message">In order to choose the dorm you want, you need to login first</string>
     <string name="cancel">Cancel</string>
     <string name="standard_value">$00.00</string>
-    <string name="total_rooms">Total rooms:</string>
+    <string name="total_rooms">Total beds:</string>
     <string name="_00">00</string>
     <string name="total_days">Total days:</string>
     <string name="payment">Payment:</string>
     <string name="check_standard">Check *</string>
     <string name="currency">Currency:</string>
-    <string name="usd">USD</string>
     <string name="total_value">Total value:</string>
     <string name="accept">Accept</string>
     <string name="date">Date</string>
     <string name="next">Next</string>
     <string name="check_in_date">Check-in</string>
+    <string name="check_in_date_">Check-in:</string>
     <string name="check_out_date">Check-out</string>
+    <string name="check_out_date_">Check-out:</string>
     <string name="payment_">Payment</string>
+    <string name="payment_method">Payment method</string>
     <string name="currency_">Currency</string>
     <string name="check_in">Check in</string>
     <string name="check_out">Check out</string>
@@ -59,5 +61,92 @@
     <string name="save">Save</string>
     <string name="invalid_date">Invalid date</string>
     <string name="date_registered">Check-in and check-out recorded successfully</string>
-    <string name="number_rooms">Rooms</string>
+    <string name="number_rooms">Beds</string>
+    <string name="dash_dash">--</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="ten">10</string>
+    <string name="eleven">11</string>
+    <string name="twelve">12</string>
+    <string name="bed_numbers">Number of beds</string>
+    <string name="usd">USD</string>
+    <string name="eur">EUR</string>
+    <string name="jpy">JPY</string>
+    <string name="gbp">GBP</string>
+    <string name="aud">AUD</string>
+    <string name="cad">CAD</string>
+    <string name="chf">CHF</string>
+    <string name="cnh">CNH</string>
+    <string name="hkd">HKD</string>
+    <string name="nzd">NZD</string>
+    <string name="brl">BRL</string>
+    <string name="payment_saved">Payment methods saved successfully</string>
+    <string name="please_complete">Please set up all the values first</string>
+    <string name="date_standard">0000/00/00</string>
+
+    <string-array name="payment">
+        <item>@string/dash_dash</item>
+        <item>@string/check_in_date</item>
+        <item>@string/check_out_date</item>
+    </string-array>
+
+    <string-array name="room6">
+        <item>@string/dash_dash</item>
+        <item>@string/one</item>
+        <item>@string/two</item>
+        <item>@string/three</item>
+        <item>@string/four</item>
+        <item>@string/five</item>
+        <item>@string/six</item>
+    </string-array>
+
+    <string-array name="room8">
+        <item>@string/dash_dash</item>
+        <item>@string/one</item>
+        <item>@string/two</item>
+        <item>@string/three</item>
+        <item>@string/four</item>
+        <item>@string/five</item>
+        <item>@string/six</item>
+        <item>@string/seven</item>
+        <item>@string/eight</item>
+    </string-array>
+
+    <string-array name="room12">
+        <item>@string/dash_dash</item>
+        <item>@string/one</item>
+        <item>@string/two</item>
+        <item>@string/three</item>
+        <item>@string/four</item>
+        <item>@string/five</item>
+        <item>@string/six</item>
+        <item>@string/seven</item>
+        <item>@string/eight</item>
+        <item>@string/nine</item>
+        <item>@string/ten</item>
+        <item>@string/eleven</item>
+        <item>@string/twelve</item>
+    </string-array>
+
+    <string-array name="currency">
+        <item>@string/dash_dash</item>
+        <item>@string/usd</item>
+        <item>@string/eur</item>
+        <item>@string/brl</item>
+        <item>@string/cad</item>
+        <item>@string/jpy</item>
+        <item>@string/gbp</item>
+        <item>@string/chf</item>
+        <item>@string/cnh</item>
+        <item>@string/nzd</item>
+        <item>@string/hkd</item>
+        <item>@string/aud</item>
+    </string-array>
 </resources>

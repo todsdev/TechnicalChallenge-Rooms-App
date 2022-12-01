@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
+import android.widget.Spinner
+import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.tods.rooms.R
@@ -18,6 +23,9 @@ import com.tods.rooms.util.hide
 import com.tods.rooms.util.show
 import com.tods.rooms.util.toast
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.*
+import java.util.concurrent.TimeUnit
+import kotlin.time.Duration.Companion.milliseconds
 
 @AndroidEntryPoint
 class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
@@ -29,6 +37,9 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
     private var bedValue: Float = 0f
     private var checkInDay: CalendarDay? = null
     private var checkOutDay: CalendarDay? = null
+    private var paymentMethod: String = ""
+    private var bedNumbers: Int = 0
+    private var chosenCurrency: String = ""
     private val args: RoomFragmentArgs by navArgs()
     override val viewModel: RoomViewModel by viewModels()
 
@@ -40,49 +51,148 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
         configPaymentsValues()
     }
 
+    private fun configTotalValues() = with(binding) {
+        val dateOne = checkInDay!!.date.time.milliseconds
+        val dateTwo = checkOutDay!!.date.time.milliseconds
+        val millisecondsBetween: Long = dateTwo.inWholeMilliseconds - dateOne.inWholeMilliseconds
+        val daysBetween = TimeUnit.MILLISECONDS.toDays(millisecondsBetween).toString()
+        val totalValue = (bedValue * daysBetween.toInt() * bedNumbers)
+        tvDays.text = daysBetween
+        tvCurrency.text = chosenCurrency
+        tvTotalValue.text = totalValue.toString()
+        tvNumberRooms.text = bedNumbers.toString()
+        tvPayment.text = paymentMethod
+        tvCheckIn.text = "${checkInDay!!.year.toString()}/${(((checkInDay!!.month).toInt()) + 1).toString()}/${checkInDay!!.day.toString()}"
+        tvCheckOut.text = "${checkOutDay!!.year.toString()}/${(((checkOutDay!!.month).toInt()) + 1).toString()}/${checkOutDay!!.day.toString()}"
+    }
+
     private fun configPaymentsValues() = with(binding) {
-        buttonCurrency.setOnClickListener {
-
-        }
-        buttonPayment.setOnClickListener {
-
-        }
-        buttonRoomNumber.setOnClickListener {
-
+        configBedNumbers()
+        configPaymentMethod()
+        configChosenCurrency()
+        buttonNextPayment.setOnClickListener {
+            if(chosenCurrency != getString(R.string.dash_dash) && bedNumbers != 0 && paymentMethod != getString(R.string.dash_dash)) {
+                toast(getString(R.string.payment_saved))
+                hiddenViewPayment.hide()
+                hiddenViewTotal.show()
+                configTotalValues()
+            } else {
+                toast(getString(R.string.please_complete))
+            }
         }
     }
 
-    private fun configInitialSettings() {
-        bedValue = args.value
-        calendarViewIn = binding.calendarViewIn
-        calendarViewOut = binding.calendarViewOut
+    private fun FragmentRoomBinding.configChosenCurrency() {
+        val viewSpinner: View = layoutInflater.inflate(R.layout.custom_spinner, null)
+        val spinnerCurrency: Spinner = viewSpinner.findViewById(R.id.custom_spinner_)
+        val currency: Array<out String> = resources.getStringArray(R.array.currency)
+        val adapterCurrency: ArrayAdapter<String> =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, currency)
+        adapterCurrency.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerCurrency.adapter = adapterCurrency
+        buttonCurrency.setOnClickListener {
+            val dialogCurrency: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+            dialogCurrency
+                .setTitle(getString(R.string.currency_))
+                .setView(viewSpinner)
+                .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }.setPositiveButton(getString(R.string.choose)) { _, _ ->
+                    if (spinnerCurrency.selectedItem.toString() != getString(R.string.dash_dash)) {
+                        chosenCurrency = spinnerCurrency.selectedItem.toString()
+                        textCurrency.text = chosenCurrency
+                    }
+                }
+            val dialog: AlertDialog = dialogCurrency.create()
+            dialog.show()
+        }
+    }
+
+    private fun FragmentRoomBinding.configBedNumbers() {
+        val viewSpinner: View = layoutInflater.inflate(R.layout.custom_spinner, null)
+        val spinnerRoomNumber: Spinner = viewSpinner.findViewById(R.id.custom_spinner_)
+        val beds: Array<out String> = when (bedValue) {
+            17.56f -> {
+                resources.getStringArray(R.array.room6)
+            }
+            14.50f -> {
+                resources.getStringArray(R.array.room8)
+            }
+            else -> {
+                resources.getStringArray(R.array.room12)
+            }
+        }
+        val bedAdapter: ArrayAdapter<String> =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, beds)
+        spinnerRoomNumber.adapter = bedAdapter
+        buttonRoomNumber.setOnClickListener {
+            val dialogBed: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+            dialogBed
+                .setTitle(getString(R.string.bed_numbers))
+                .setView(viewSpinner)
+                .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }.setPositiveButton(getString(R.string.choose)) { _, _ ->
+                    if (spinnerRoomNumber.selectedItem.toString() != getString(R.string.dash_dash)) {
+                        val stringNumbers = spinnerRoomNumber.selectedItem.toString()
+                        textRoomNumber.text = stringNumbers
+                        bedNumbers = stringNumbers.toInt()
+                    }
+                }
+            val dialog: AlertDialog = dialogBed.create()
+            dialog.show()
+        }
+    }
+
+    private fun FragmentRoomBinding.configPaymentMethod() {
+        val viewSpinner: View = layoutInflater.inflate(R.layout.custom_spinner, null)
+        val spinnerPayment: Spinner = viewSpinner.findViewById(R.id.custom_spinner_)
+        val paymentMethods: Array<out String> = resources.getStringArray(R.array.payment)
+        val adapterPayment: ArrayAdapter<String> =
+            ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, paymentMethods)
+        adapterPayment.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        spinnerPayment.adapter = adapterPayment
+        buttonPayment.setOnClickListener {
+            val dialogPayment: AlertDialog.Builder = AlertDialog.Builder(requireContext())
+            dialogPayment
+                .setTitle(getString(R.string.payment_method))
+                .setView(viewSpinner)
+                .setPositiveButton(getString(R.string.choose)) { _, _ ->
+                    if(spinnerPayment.selectedItem.toString() != getString(R.string.dash_dash)) {
+                        paymentMethod = spinnerPayment.selectedItem.toString()
+                        textPayment.text = paymentMethod
+                    }
+                }.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                    dialog.dismiss()
+                }
+            val dialog: AlertDialog = dialogPayment.create()
+            dialog.show()
+        }
     }
 
     private fun configDateValues() = with(binding) {
         configDateView()
         buttonSaveCheckIn.setOnClickListener {
             if(calendarViewIn.selectedDate != null) {
-                val selectedCheckInDate: CalendarDay = calendarViewIn.selectedDate
-                checkInDay = selectedCheckInDate
-                calendarViewIn.hide()
                 buttonSaveCheckIn.hide()
                 buttonSaveCheckOut.show()
+                calendarViewIn.hide()
                 calendarViewOut.show()
-                checkInDate.text = "${checkInDay!!.year.toString()}/${checkInDay!!.month.toString()}/${checkInDay!!.day.toString()}"
-                calendarIn.setOnClickListener(null)
+                val selectedCheckInDate: CalendarDay = calendarViewIn.selectedDate
+                checkInDay = selectedCheckInDate
+                checkInDate.text = "${checkInDay!!.year.toString()}/${(((checkInDay!!.month).toInt()) + 1).toString()}/${checkInDay!!.day.toString()}"
             } else {
                 toast(getString(R.string.please_date_check_in))
             }
         }
         buttonSaveCheckOut.setOnClickListener {
                 if(calendarViewOut.selectedDate != null && calendarViewOut.selectedDate.isAfter(checkInDay!!)) {
+                    buttonSaveCheckOut.hide()
+                    calendarViewOut.hide()
+                    buttonNext.show()
                     val selectedCheckOutDate: CalendarDay = calendarViewOut.selectedDate
                     checkOutDay = selectedCheckOutDate
-                    calendarViewOut.hide()
-                    buttonSaveCheckOut.hide()
-                    buttonNext.show()
-                    checkOutDate.text = "${checkOutDay!!.year.toString()}/${checkOutDay!!.month.toString()}/${checkOutDay!!.day.toString()}"
-                    calendarOut.setOnClickListener(null)
+                    checkOutDate.text = "${checkOutDay!!.year.toString()}/${(((checkOutDay!!.month).toInt()) + 1).toString()}/${checkOutDay!!.day.toString()}"
                 } else {
                     toast(getString(R.string.please_date_check_out))
                 }
@@ -121,23 +231,34 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
                 calendarViewIn.show()
                 buttonNext.hide()
                 buttonSaveCheckIn.show()
+                calendarIn.setOnClickListener(null)
+                calendarOut.setOnClickListener(null)
             } else {
                 calendarViewIn.hide()
                 buttonSaveCheckIn.hide()
                 buttonNext.show()
             }
         }
-        calendarOut.setOnClickListener {
-            if (calendarViewOut.visibility == View.GONE) {
-                calendarViewOut.show()
-                buttonNext.hide()
-                buttonSaveCheckOut.show()
-            } else {
-                calendarViewOut.hide()
-                buttonSaveCheckOut.hide()
-                buttonNext.show()
+    }
+
+    private fun configInitialSettings() {
+        bedValue = args.value
+        when(bedValue) {
+            17.56f -> {
+                binding.tvRoomType.text = getString(R.string.six_beds_dorm)
+                binding.tvRoomValue.text = getString(R.string._17_56)
+            }
+            14.50f -> {
+                binding.tvRoomType.text = getString(R.string.eight_beds_dorm)
+                binding.tvRoomValue.text = getString(R.string._14_50)
+            }
+            else -> {
+                binding.tvRoomType.text = getString(R.string.twelve_beds_dorm)
+                binding.tvRoomValue.text = getString(R.string._12_01)
             }
         }
+        calendarViewIn = binding.calendarViewIn
+        calendarViewOut = binding.calendarViewOut
     }
 
     private fun configHiddenCards() {
@@ -172,11 +293,17 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
             }
         }
         arrowDownTotal.setOnClickListener {
-
+                if(hiddenViewTotal.visibility == View.VISIBLE) {
+                    hiddenViewTotal.hide()
+                    arrowDownTotal.setImageResource(R.drawable.ic_arrow_down_24)
+                } else {
+                    TransitionManager.beginDelayedTransition(cardViewRoom, AutoTransition())
+                    hiddenViewTotal.show()
+                    arrowDownTotal.setImageResource(R.drawable.ic_arrow_up_24)
+                }
         }
     }
 
     override fun recoverViewBinding(inflater: LayoutInflater, container: ViewGroup?):
             FragmentRoomBinding = FragmentRoomBinding.inflate(inflater, container, false)
-
 }

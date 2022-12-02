@@ -1,5 +1,6 @@
 package com.tods.rooms.ui.my_reservations
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ import com.tods.rooms.util.hide
 import com.tods.rooms.util.show
 import com.tods.rooms.util.toast
 import dagger.hilt.android.AndroidEntryPoint
+import dmax.dialog.SpotsDialog
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
@@ -43,6 +45,12 @@ class MyReservationsFragment: BaseFragment<FragmentMyReservationsBinding, MyRese
     }
 
     private fun configRecoverReservations(){
+        val dialog: AlertDialog? = SpotsDialog.Builder()
+            .setContext(requireContext())
+            .setMessage(getString(R.string.recovering_reservations))
+            .setCancelable(false)
+            .build()
+        dialog?.show()
         adUserRef = FirebaseDatabase.getInstance()
             .getReference("Reservations")
             .child(auth.currentUser!!.uid)
@@ -52,7 +60,12 @@ class MyReservationsFragment: BaseFragment<FragmentMyReservationsBinding, MyRese
                 for (ds: DataSnapshot in snapshot.children){
                     reservationList.add(ds.getValue(Reservation::class.java)!!)
                 }
+                if(reservationList.isEmpty()) {
+                    binding.recyclerMyReservations.hide()
+                    binding.textEmptyList.show()
+                }
                 reservationList.reverse()
+                dialog?.dismiss()
                 adapterReservations.notifyDataSetChanged()
             }
 
@@ -77,9 +90,10 @@ class MyReservationsFragment: BaseFragment<FragmentMyReservationsBinding, MyRese
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(getString(R.string.delete_reservation))
                     .setMessage(getString(R.string.sure_delete))
-                    .setPositiveButton(getString(R.string.accept)) { _, _ ->
-                        val reservation = adapterReservations.getCharacterPosition(viewHolder.adapterPosition)
-                        toast(getString(R.string.delete_reservation))
+                    .setPositiveButton(getString(R.string.yes)) { _, _ ->
+                        val reservation = adapterReservations.getReservationPosition(viewHolder.adapterPosition)
+                        reservation.remove()
+                        toast(getString(R.string.deleted_reservation))
                     }.setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                         dialog.dismiss().also {
                             adapterReservations.notifyDataSetChanged()

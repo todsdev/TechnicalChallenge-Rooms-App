@@ -80,7 +80,7 @@ class MyReservationsAdapter(private val list: List<Reservation>):
         onItemClickListener = listener
     }
 
-    fun getCharacterPosition(position: Int): Reservation {
+    fun getReservationPosition(position: Int): Reservation {
         return list[position]
     }
 }

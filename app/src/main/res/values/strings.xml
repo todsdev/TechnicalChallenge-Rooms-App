@@ -99,6 +99,9 @@
     <string name="delete_reservation">Delete reservation</string>
     <string name="sure_delete">Are you sure do you want to delete this reservation?</string>
     <string name="deleted_reservation">Reservation deleted successfully</string>
+    <string name="recovering_reservations">Recovering reservations</string>
+    <string name="yes">Yes</string>
+    <string name="no_reservations_found">No reservations found</string>
 
     <string-array name="payment">
         <item>@string/dash_dash</item>

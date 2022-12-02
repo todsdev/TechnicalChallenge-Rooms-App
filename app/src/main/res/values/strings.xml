@@ -57,7 +57,7 @@
     <string name="check_in">Check in</string>
     <string name="check_out">Check out</string>
     <string name="please_date">Please choose a date for check-in and check-out</string>
-    <string name="please_date_check_in">Please choose a date for check-in first</string>
+    <string name="please_date_check_in">Please choose a valid date for check-in first</string>
     <string name="please_date_check_out">Please choose a valid date for check-out first</string>
     <string name="save">Save</string>
     <string name="invalid_date">Invalid date</string>
@@ -95,6 +95,10 @@
     <string name="loading">Loading</string>
     <string name="confirm">Please confirm your information</string>
     <string name="sure_confirm">Do you confirm the reservation details?</string>
+    <string name="beds">Beds:</string>
+    <string name="delete_reservation">Delete reservation</string>
+    <string name="sure_delete">Are you sure do you want to delete this reservation?</string>
+    <string name="deleted_reservation">Reservation deleted successfully</string>
 
     <string-array name="payment">
         <item>@string/dash_dash</item>

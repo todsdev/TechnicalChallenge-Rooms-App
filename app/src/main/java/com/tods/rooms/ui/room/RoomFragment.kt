@@ -42,6 +42,7 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
     private lateinit var calendarViewIn: MaterialCalendarView
     private lateinit var calendarViewOut: MaterialCalendarView
     private var bedValue: Float = 0f
+    private var rate: Float = 0f
     private var checkInDay: CalendarDay? = null
     private var checkOutDay: CalendarDay? = null
     private var paymentMethod: String = ""
@@ -71,6 +72,7 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
                         binding.tvTotalValue.text =
                             "${convertedValueToDecimal.toString()} ${values.query.to.uppercase(
                                 Locale.getDefault())}"
+                        rate = values.info.rate
                     }
                 }
                 is ResourceState.Loading -> {
@@ -115,6 +117,7 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
                     reservation.baseValue = bedValue
                     reservation.currency = chosenCurrency
                     reservation.numBeds = bedNumbers
+                    reservation.rate = rate
                     reservation.save()
                     toast(getString(R.string.registered_successfully_reservation))
                     val action = RoomFragmentDirections.actionRoomFragmentToMyReservationsFragment()
@@ -240,7 +243,7 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
     private fun configDateValues() = with(binding) {
         configDateView()
         buttonSaveCheckIn.setOnClickListener {
-            if(calendarViewIn.selectedDate != null) {
+            if(calendarViewIn.selectedDate != null && calendarViewIn.selectedDate.isAfter(calendarViewIn.currentDate)) {
                 buttonSaveCheckIn.hide()
                 buttonSaveCheckOut.show()
                 calendarViewIn.hide()
@@ -253,7 +256,7 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
             }
         }
         buttonSaveCheckOut.setOnClickListener {
-                if(calendarViewOut.selectedDate != null && calendarViewOut.selectedDate.isAfter(checkInDay!!)) {
+                if(calendarViewOut.selectedDate != null && calendarViewOut.selectedDate.isAfter(calendarViewIn.selectedDate)) {
                     buttonSaveCheckOut.hide()
                     calendarViewOut.hide()
                     buttonNext.show()

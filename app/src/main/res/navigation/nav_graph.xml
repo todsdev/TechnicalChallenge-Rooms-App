@@ -54,5 +54,18 @@
         android:id="@+id/myReservationsFragment"
         android:name="com.tods.rooms.ui.my_reservations.MyReservationsFragment"
         android:label="MyReservationsFragment"
-        tools:layout="@layout/fragment_my_reservations"/>
+        tools:layout="@layout/fragment_my_reservations">
+        <action
+            android:id="@+id/action_myReservationsFragment_to_myReservationDetailsFragment"
+            app:destination="@id/myReservationDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/myReservationDetailsFragment"
+        android:name="com.tods.rooms.ui.my_reservation_details.MyReservationDetailsFragment"
+        android:label="MyReservationDetailsFragment"
+        tools:layout="@layout/fragment_my_reservation_details">
+        <argument
+            android:name="reservation"
+            app:argType="com.tods.rooms.data.model.Reservation" />
+    </fragment>
 </navigation>

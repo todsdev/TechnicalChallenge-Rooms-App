@@ -14,5 +14,4 @@ interface ServiceApi {
         @Query("amount") amount: Float,
         @Query("apikey") apiKey: String
     ): Response<ResponseModel>
-
 }

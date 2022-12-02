@@ -44,6 +44,7 @@
     <string name="check_standard">Check *</string>
     <string name="currency">Currency:</string>
     <string name="total_value">Total value:</string>
+    <string name="total_value_">Total \n value:</string>
     <string name="accept">Accept</string>
     <string name="date">Date</string>
     <string name="next">Next</string>
@@ -53,6 +54,8 @@
     <string name="check_out_date_">Check-out:</string>
     <string name="payment_">Payment</string>
     <string name="payment_method">Payment method</string>
+    <string name="payment_method_">Payment at:</string>
+    <string name="exchange_rate_">Exchange rate:</string>
     <string name="currency_">Currency</string>
     <string name="check_in">Check in</string>
     <string name="check_out">Check out</string>
@@ -102,6 +105,13 @@
     <string name="recovering_reservations">Recovering reservations</string>
     <string name="yes">Yes</string>
     <string name="no_reservations_found">No reservations found</string>
+    <string name="standard_date">YYYY/MM/DD</string>
+    <string name="room_base_value">Room base value:</string>
+    <string name="standard_currency">Standard currency:</string>
+    <string name="recalculate">Recalculate</string>
+    <string name="save_changes">Save changes</string>
+    <string name="impossible_one_date">Impossible to recalculate with only one date</string>
+    <string name="impossible_recalculate">Unable to recalculate with provided changes</string>
 
     <string-array name="payment">
         <item>@string/dash_dash</item>

@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,9 +16,8 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import com.tods.rooms.R
-import com.tods.rooms.data.model.Reservation
+import com.tods.rooms.data.model.firebase_model.Reservation
 import com.tods.rooms.databinding.FragmentMyReservationsBinding
-import com.tods.rooms.state.ResourceState
 import com.tods.rooms.ui.adapter.MyReservationsAdapter
 import com.tods.rooms.ui.base.BaseFragment
 import com.tods.rooms.util.hide
@@ -27,7 +25,6 @@ import com.tods.rooms.util.show
 import com.tods.rooms.util.toast
 import dagger.hilt.android.AndroidEntryPoint
 import dmax.dialog.SpotsDialog
-import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MyReservationsFragment: BaseFragment<FragmentMyReservationsBinding, MyReservationsViewModel>() {

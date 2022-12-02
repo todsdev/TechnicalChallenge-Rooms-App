@@ -14,7 +14,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.tods.rooms.R
 import com.tods.rooms.databinding.FragmentLoginBinding
-import com.tods.rooms.data.model.User
+import com.tods.rooms.data.model.firebase_model.User
 import com.tods.rooms.ui.base.BaseFragment
 import com.tods.rooms.util.toast
 import dagger.hilt.android.AndroidEntryPoint

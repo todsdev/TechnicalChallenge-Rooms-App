@@ -66,6 +66,9 @@
         tools:layout="@layout/fragment_my_reservation_details">
         <argument
             android:name="reservation"
-            app:argType="com.tods.rooms.data.model.Reservation" />
+            app:argType="com.tods.rooms.data.model.firebase_model.Reservation" />
+        <action
+            android:id="@+id/action_myReservationDetailsFragment_to_myReservationsFragment"
+            app:destination="@id/myReservationsFragment" />
     </fragment>
 </navigation>

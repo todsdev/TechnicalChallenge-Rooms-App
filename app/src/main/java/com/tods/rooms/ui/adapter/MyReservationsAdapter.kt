@@ -2,16 +2,12 @@ package com.tods.rooms.ui.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.AsyncListDiffer
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.squareup.picasso.Picasso
-import com.tods.rooms.data.model.Reservation
-import com.tods.rooms.data.model.api_model.ResponseModel
+import com.tods.rooms.data.model.firebase_model.Reservation
 import com.tods.rooms.databinding.ItemReservationBinding
-import com.tods.rooms.ui.my_reservations.MyReservationsViewModel
 import java.text.DecimalFormat
-import java.util.*
 
 class MyReservationsAdapter(private val list: List<Reservation>):
     RecyclerView.Adapter<MyReservationsAdapter.MyReservationsViewHolder>() {

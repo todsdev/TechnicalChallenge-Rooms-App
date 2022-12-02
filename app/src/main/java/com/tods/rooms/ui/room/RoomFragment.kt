@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -19,12 +18,11 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView
 import com.tods.rooms.R
-import com.tods.rooms.data.model.Reservation
+import com.tods.rooms.data.model.firebase_model.Reservation
 import com.tods.rooms.databinding.FragmentRoomBinding
 import com.tods.rooms.state.ResourceState
 import com.tods.rooms.ui.base.BaseFragment
 import com.tods.rooms.util.hide
-import com.tods.rooms.util.limitedDescription
 import com.tods.rooms.util.show
 import com.tods.rooms.util.toast
 import dagger.hilt.android.AndroidEntryPoint
@@ -43,6 +41,7 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
     private lateinit var calendarViewOut: MaterialCalendarView
     private var bedValue: Float = 0f
     private var rate: Float = 0f
+    private var usdValue: Float = 0f
     private var checkInDay: CalendarDay? = null
     private var checkOutDay: CalendarDay? = null
     private var paymentMethod: String = ""

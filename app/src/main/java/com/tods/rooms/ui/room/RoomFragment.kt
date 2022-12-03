@@ -303,7 +303,6 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
     private fun FragmentRoomBinding.configDateView() {
         buttonSaveCheckIn.hide()
         buttonSaveCheckOut.hide()
-        calendarViewIn.hide()
         calendarViewOut.hide()
         calendarIn.setOnClickListener {
             if (calendarViewIn.visibility == View.GONE) {

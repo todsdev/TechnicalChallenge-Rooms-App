@@ -11,9 +11,9 @@
         android:id="@+id/progress_details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
-        android:indeterminateTint="@color/red"
         android:elevation="5dp"
+        android:indeterminateTint="@color/red"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -57,64 +57,64 @@
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="@string/exchange_rate_"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView15" />
+                    app:layout_constraintTop_toBottomOf="@id/edit_beds" />
 
                 <TextView
                     android:id="@+id/textView19"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="150dp"
+                    android:layout_height="40dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="30dp"
                     android:gravity="center"
-                    android:text="@string/total_value_"
+                    android:text="@string/total_value"
                     android:textColor="@color/black"
                     android:textSize="22sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/button_recalculate"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/textView16" />
 
                 <Spinner
                     android:id="@+id/spinner_currency"
-                    android:layout_width="50dp"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView15"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/spinner_beds" />
+                    app:layout_constraintStart_toEndOf="@+id/textView15"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_payment" />
 
                 <TextView
                     android:id="@+id/textView14"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/beds"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/edit_beds"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
+                    app:layout_constraintTop_toBottomOf="@+id/edit_currency" />
 
                 <TextView
                     android:id="@+id/textView15"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/currency"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/edit_currency"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
+                    app:layout_constraintTop_toBottomOf="@+id/edit_payment" />
 
                 <TextView
                     android:id="@+id/et_check_out"
@@ -125,36 +125,35 @@
                     android:ems="10"
                     android:gravity="center"
                     android:text="@string/standard_date"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_check_in" />
+                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
                 <TextView
                     android:id="@+id/textView12"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="2dp"
+                    android:layout_marginTop="20dp"
                     android:text="@string/payment_method_"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/edit_payment"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView11" />
+                    app:layout_constraintTop_toBottomOf="@+id/et_check_in" />
 
                 <TextView
                     android:id="@+id/textView11"
                     android:layout_width="wrap_content"
                     android:layout_height="40dp"
-                    android:layout_marginStart="8dp"
                     android:layout_marginTop="20dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/check_out_date_"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/et_check_out"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/textView10"
-                    app:layout_constraintVertical_bias="1.0" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/imageDetails" />
 
                 <ImageButton
                     android:id="@+id/imageDetails"
@@ -250,7 +249,6 @@
                     android:text="@string/check_in_date_"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/et_check_in"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/imageDetails" />
 
@@ -258,54 +256,68 @@
                     android:id="@+id/et_check_in"
                     android:layout_width="150dp"
                     android:layout_height="40dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:ems="10"
                     android:gravity="center"
                     android:text="@string/standard_date"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/imageDetails" />
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
                 <Spinner
                     android:id="@+id/spinner_beds"
-                    android:layout_width="50dp"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView14"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/spinner_payment_method" />
+                    app:layout_constraintStart_toEndOf="@id/textView14"
+                    app:layout_constraintTop_toBottomOf="@+id/edit_currency" />
 
                 <Spinner
                     android:id="@+id/spinner_payment_method"
-                    android:layout_width="50dp"
+                    android:layout_width="0dp"
                     android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
+                    android:textAlignment="center"
+                    app:layout_constraintBottom_toBottomOf="@+id/textView12"
                     app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/textView12"
                     app:layout_constraintTop_toBottomOf="@+id/et_check_out" />
 
                 <TextView
                     android:id="@+id/text_rate"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="20dp"
                     android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:text="@string/_00"
+                    android:textColor="@color/black"
                     android:textSize="18sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/textView16"
+                    android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/spinner_currency" />
+                    app:layout_constraintTop_toBottomOf="@+id/edit_beds" />
 
                 <Button
                     android:id="@+id/button_recalculate"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="30dp"
                     android:layout_marginBottom="10dp"
                     android:text="@string/recalculate"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_total_value" />
 
                 <Button
                     android:id="@+id/button_save_changes"
@@ -324,68 +336,73 @@
                     android:id="@+id/text_selected_currency"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     android:text="@string/usd"
                     android:textColor="@color/green"
                     android:textSize="26sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/button_save_changes"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_rate"
-                    app:layout_constraintVertical_bias="0.505" />
+                    app:layout_constraintBottom_toBottomOf="@+id/text_total_value"
+                    app:layout_constraintStart_toEndOf="@+id/text_total_value" />
 
                 <TextView
                     android:id="@+id/text_total_value"
                     android:layout_width="200dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="5dp"
                     android:text="@string/standard_value"
                     android:textAlignment="textEnd"
                     android:textAllCaps="false"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginStart="10dp"
                     android:textColor="@color/green"
                     android:textSize="26sp"
                     android:textStyle="bold"
-                    app:layout_constraintBottom_toTopOf="@+id/button_save_changes"
-                    app:layout_constraintEnd_toStartOf="@+id/text_selected_currency"
-                    app:layout_constraintTop_toBottomOf="@+id/text_rate"
-                    app:layout_constraintVertical_bias="0.505" />
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView19" />
 
                 <TextView
                     android:id="@+id/edit_payment"
-                    android:layout_width="90dp"
+                    android:layout_width="150dp"
                     android:layout_height="40dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:gravity="center"
                     android:text="@string/check_in"
                     android:textAlignment="gravity"
-                    app:layout_constraintBottom_toBottomOf="@+id/spinner_payment_method"
-                    app:layout_constraintEnd_toStartOf="@+id/spinner_payment_method" />
+                    android:textColor="@color/green"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView12" />
 
                 <TextView
                     android:id="@+id/edit_beds"
-                    android:layout_width="90dp"
+                    android:layout_width="150dp"
                     android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:text="@string/bed_numbers"
                     android:textAlignment="gravity"
-                    app:layout_constraintBottom_toBottomOf="@+id/spinner_beds"
-                    app:layout_constraintEnd_toStartOf="@+id/spinner_beds"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_payment" />
+                    android:textColor="@color/green"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView14" />
 
                 <TextView
                     android:id="@+id/edit_currency"
-                    android:layout_width="90dp"
+                    android:layout_width="150dp"
                     android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
-                    android:layout_marginEnd="10dp"
                     android:gravity="center"
                     android:text="@string/currency_"
                     android:textAlignment="gravity"
-                    app:layout_constraintBottom_toBottomOf="@+id/spinner_currency"
-                    app:layout_constraintEnd_toStartOf="@+id/spinner_currency"
-                    app:layout_constraintTop_toBottomOf="@+id/edit_beds" />
+                    android:textColor="@color/green"
+                    android:textSize="18sp"
+                    android:textStyle="bold"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.cardview.widget.CardView>

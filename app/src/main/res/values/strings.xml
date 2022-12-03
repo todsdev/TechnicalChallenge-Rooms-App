@@ -87,7 +87,7 @@
     <string name="aud">AUD</string>
     <string name="cad">CAD</string>
     <string name="chf">CHF</string>
-    <string name="cnh">CNH</string>
+    <string name="cny">CNY</string>
     <string name="hkd">HKD</string>
     <string name="nzd">NZD</string>
     <string name="brl">BRL</string>
@@ -112,6 +112,14 @@
     <string name="save_changes">Save changes</string>
     <string name="impossible_one_date">Impossible to recalculate with only one date</string>
     <string name="impossible_recalculate">Unable to recalculate with provided changes</string>
+    <string name="sure_update">Are you sure thar you want to update your reservation?</string>
+    <string name="update_reservation">Update reservation</string>
+    <string name="how_to_use">HOW_TO_USE</string>
+    <string name="how_to_use_">Instructions</string>
+    <string name="dialog_message">In order to change the check-in or check-out date /n
+    is necessary to call the provider to check date availability. /n
+    Set up all the information for possible changes, check the new results /n
+    and accept if you agree with the new terms.</string>
 
     <string-array name="payment">
         <item>@string/dash_dash</item>
@@ -166,7 +174,7 @@
         <item>@string/jpy</item>
         <item>@string/gbp</item>
         <item>@string/chf</item>
-        <item>@string/cnh</item>
+        <item>@string/cny</item>
         <item>@string/nzd</item>
         <item>@string/hkd</item>
         <item>@string/aud</item>

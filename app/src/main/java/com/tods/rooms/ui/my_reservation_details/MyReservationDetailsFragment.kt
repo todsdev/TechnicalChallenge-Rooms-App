@@ -1,6 +1,9 @@
 package com.tods.rooms.ui.my_reservation_details
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,9 +12,12 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
@@ -21,6 +27,7 @@ import com.tods.rooms.data.model.firebase_model.Reservation
 import com.tods.rooms.databinding.FragmentMyReservationDetailsBinding
 import com.tods.rooms.state.ResourceState
 import com.tods.rooms.ui.base.BaseFragment
+import com.tods.rooms.util.Constants
 import com.tods.rooms.util.hide
 import com.tods.rooms.util.show
 import com.tods.rooms.util.toast
@@ -38,14 +45,42 @@ class MyReservationDetailsFragment: BaseFragment<FragmentMyReservationDetailsBin
             FragmentMyReservationDetailsBinding = FragmentMyReservationDetailsBinding.inflate(inflater, container, false)
     private val args: MyReservationDetailsFragmentArgs by navArgs()
     private lateinit var reservation: Reservation
-    private val auth: FirebaseAuth = Firebase.auth
-    private val database: DatabaseReference = FirebaseDatabase.getInstance().reference
+    private var newReservation: Reservation = Reservation()
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         configInitialSettings()
         configInitialView()
         configButtonRecalculateClickListener()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        configSharedPreferences()
+    }
+
+    private fun configSharedPreferences() {
+        sharedPreferences = activity!!.getPreferences(Context.MODE_PRIVATE) ?: return
+        val value =
+            sharedPreferences.getInt(getString(R.string.how_to_use), Constants.DEFAULT_VALUE)
+        if (value == Constants.DEFAULT_VALUE) {
+            sharedPreferences = activity!!.getPreferences(Context.MODE_PRIVATE) ?: return
+            with(sharedPreferences.edit()) {
+                putInt(getString(R.string.how_to_use), Constants.UPDATED_VALUE)
+                apply()
+            }
+            configOneTimeDialog()
+        }
+    }
+
+    private fun configOneTimeDialog() {
+        MaterialAlertDialogBuilder(requireContext())
+            .setTitle(getString(R.string.how_to_use_))
+            .setMessage(getString(R.string.dialog_message))
+            .setPositiveButton(getString(R.string.accept)) { dialog, _ ->
+                dialog.dismiss()
+            }.show()
     }
 
     private fun configButtonRecalculateClickListener() = with(binding) {
@@ -94,7 +129,27 @@ class MyReservationDetailsFragment: BaseFragment<FragmentMyReservationDetailsBin
                 toast(getString(R.string.impossible_recalculate))
             }
             buttonSaveChanges.setOnClickListener {
-
+                MaterialAlertDialogBuilder(requireContext())
+                    .setTitle(getString(R.string.update_reservation))
+                    .setMessage(getString(R.string.sure_delete))
+                    .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
+                        dialog.dismiss()
+                    }.setPositiveButton(getString(R.string.confirm)) { _, _ ->
+                        newReservation.numBeds = spinnerBeds.selectedItem.toString().toInt()
+                        newReservation.currency = spinnerCurrency.selectedItem.toString()
+                        if(spinnerPaymentMethod.selectedItem.toString() == getString(R.string.dash_dash)) {
+                            newReservation.paymentMethod = reservation.paymentMethod
+                        } else {
+                            newReservation.paymentMethod = spinnerPaymentMethod.selectedItem.toString()
+                        }
+                        newReservation.numDays = reservation.numDays
+                        newReservation.checkIn = reservation.checkIn
+                        newReservation.checkOut = reservation.checkOut
+                        newReservation.baseValue = reservation.baseValue
+                        newReservation.update()
+                        val action = MyReservationDetailsFragmentDirections.actionMyReservationDetailsFragmentToMyReservationsFragment()
+                        findNavController().navigate(action)
+                    }.show()
             }
         }
     }
@@ -108,19 +163,19 @@ class MyReservationDetailsFragment: BaseFragment<FragmentMyReservationDetailsBin
             17.56f -> {
                 textTitle.text = getString(R.string.six_beds_dorm)
                 textBaseValue.text = getString(R.string._17_56)
-                Picasso.get().load("https://i.pinimg.com/564x/a1/71/9c/a1719ca9d3e8b1f41942ac3a1a6def97.jpg")
+                Picasso.get().load(Constants.URL_6)
                     .into(imageDetails)
             }
             14.50f -> {
                 textTitle.text = getString(R.string.eight_beds_dorm)
                 textBaseValue.text = getString(R.string._14_50)
-                Picasso.get().load("https://i.pinimg.com/564x/8a/4c/c0/8a4cc0e44b60c8e3946ac39363dc50e0.jpg")
+                Picasso.get().load(Constants.URL_8)
                     .into(imageDetails)
             }
             else -> {
                 textTitle.text = getString(R.string.twelve_beds_dorm)
                 textBaseValue.text = getString(R.string._12_01)
-                Picasso.get().load("https://i.pinimg.com/564x/28/d0/db/28d0dbf080d9f05e74f411af069f8f2b.jpg")
+                Picasso.get().load(Constants.URL_12)
                     .into(imageDetails)
             }
         }
@@ -189,6 +244,8 @@ class MyReservationDetailsFragment: BaseFragment<FragmentMyReservationDetailsBin
                         binding.textRate.text = values.info.rate.toString()
                         binding.textSelectedCurrency.text = values.query.to
                         binding.editCurrency.text = values.query.to
+                        newReservation.totalValue = values.result
+                        newReservation.rate = values.info.rate
                     }
                 }
                 is ResourceState.Loading -> {

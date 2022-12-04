@@ -131,10 +131,10 @@ class MyReservationDetailsFragment: BaseFragment<FragmentMyReservationDetailsBin
             buttonSaveChanges.setOnClickListener {
                 MaterialAlertDialogBuilder(requireContext())
                     .setTitle(getString(R.string.update_reservation))
-                    .setMessage(getString(R.string.sure_delete))
+                    .setMessage(getString(R.string.sure_update))
                     .setNegativeButton(getString(R.string.cancel)) { dialog, _ ->
                         dialog.dismiss()
-                    }.setPositiveButton(getString(R.string.confirm)) { _, _ ->
+                    }.setPositiveButton(getString(R.string.accept)) { _, _ ->
                         newReservation.numBeds = spinnerBeds.selectedItem.toString().toInt()
                         newReservation.currency = spinnerCurrency.selectedItem.toString()
                         if(spinnerPaymentMethod.selectedItem.toString() == getString(R.string.dash_dash)) {

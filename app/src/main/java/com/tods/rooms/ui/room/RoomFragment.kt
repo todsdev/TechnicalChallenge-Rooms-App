@@ -257,7 +257,6 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
         buttonSaveCheckOut.setOnClickListener {
                 if(calendarViewOut.selectedDate != null && calendarViewOut.selectedDate.isAfter(calendarViewIn.selectedDate)) {
                     buttonSaveCheckOut.hide()
-                    calendarViewOut.hide()
                     buttonNext.show()
                     val selectedCheckOutDate: CalendarDay = calendarViewOut.selectedDate
                     checkOutDay = selectedCheckOutDate
@@ -301,20 +300,19 @@ class RoomFragment: BaseFragment<FragmentRoomBinding, RoomViewModel>() {
     }
 
     private fun FragmentRoomBinding.configDateView() {
-        buttonSaveCheckIn.hide()
+        buttonSaveCheckIn.show()
         buttonSaveCheckOut.hide()
         calendarViewOut.hide()
+        buttonNext.hide()
         calendarIn.setOnClickListener {
             if (calendarViewIn.visibility == View.GONE) {
                 calendarViewIn.show()
-                buttonNext.hide()
                 buttonSaveCheckIn.show()
                 calendarIn.setOnClickListener(null)
                 calendarOut.setOnClickListener(null)
             } else {
                 calendarViewIn.hide()
                 buttonSaveCheckIn.hide()
-                buttonNext.show()
             }
         }
     }

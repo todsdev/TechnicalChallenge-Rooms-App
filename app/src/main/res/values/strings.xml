@@ -116,9 +116,9 @@
     <string name="update_reservation">Update reservation</string>
     <string name="how_to_use">HOW_TO_USE</string>
     <string name="how_to_use_">Instructions</string>
-    <string name="dialog_message">In order to change the check-in or check-out date /n
-    is necessary to call the provider to check date availability. /n
-    Set up all the information for possible changes, check the new results /n
+    <string name="dialog_message">In order to change the check-in or check-out date
+    is necessary to call the provider to check date availability. \n
+    Set up all the information for possible changes, check the new results
     and accept if you agree with the new terms.</string>
 
     <string-array name="payment">
